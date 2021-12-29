@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Post, User } = require("../../models");
+const { Post, User, Like } = require("../../models");
 
 // GET ALL posts
 router.get("/", (req, res) => {
@@ -60,6 +60,16 @@ router.post("/", (req, res) => {
     });
 });
 
+// CREATE a Like by UPDATING a Post
+router.put('/uplike', (req, res) => {
+    Like.create({
+        user_id: req.body.user_id,
+        post_id: req.body.post_id
+    })
+    .then(dbPostData => res.json(dbPostData))
+    .catch(err => res.json(err));
+})
+
 // UPDATE a Post
 router.put("/:id", (req, res) => {
   Post.update(
@@ -84,6 +94,7 @@ router.put("/:id", (req, res) => {
       res.status(500).json(err);
     });
 });
+
 
 // DELETE a Post
 router.delete('/:id', (req, res) => {
