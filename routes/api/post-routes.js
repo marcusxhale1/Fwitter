@@ -1,5 +1,6 @@
+const sequelize = require('../../config/connection');
 const router = require('express').Router();
-const { Post, User, LikeButton } = require('../../models');
+const { Post, User, Vote } = require('../../models');
 
 // get all users
 router.get('/', (req, res) => {
@@ -59,15 +60,37 @@ router.get('/', (req, res) => {
       });
   });
 
-  // PUT /api/posts/likeButton
-  router.put('/likeButton', (req, res) =>{
-      LikeButton.create({
+  // PUT /api/posts/Vote
+  router.put('/Vote', (req, res) =>{
+      Vote.create({
           user_id: req.body.user_id,
-          LikeButton_id: req.body.LikeButton_id
+          post_id: req.body.post_id
       })
-      .then(dbPostData => res.json(dbPostData))
-      .catch(err => res.json(err));
+      .then(() => {
+        // then find the post we just voted on
+        return Post.findOne({
+          where: {
+            id: req.body.post_id
+          },
+          attributes: [
+            'id',
+            'fweet',
+            'created_at',
+            // use raw MySQL aggregate function query to get a count of how many votes the post has and return it under the name `like_count`
+            [
+                sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'),
+                'vote_count'
+            ]
+          ]
+        })
+        .then(dbPostData => res.json(dbPostData))
+        .catch(err => {
+          console.log(err);
+          res.status(400).json(err);
+        })
+
   })
+  });
 
   //Updating someone's fweet
   router.put('/:id', (req, res) => {
