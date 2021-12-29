@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// GET /api/users/1 --- READS SPECIFIC USER
+// GET /api/users/1 --- READS SPECIFIC USER -- Also excluding password information when creating user into database
 router.get("/:id", (req, res) => {
   User.findOne({
     attributes: { exclude: ["password"] },
