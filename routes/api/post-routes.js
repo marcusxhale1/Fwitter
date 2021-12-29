@@ -46,12 +46,36 @@ router.get('/', (req, res) => {
   });
 
   router.post('/', (req, res) => {
-    // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
+    // expects {Fweet: 'Just a random fweet', user_id: 1}
     Post.create({
       fweet: req.body.fweet,
       user_id: req.body.user_id
     })
       .then(dbPostData => res.json(dbPostData))
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+
+  router.put('/:id', (req, res) => {
+    Post.update(
+      {
+        fweet: req.body.fweet
+      },
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    )
+      .then(dbPostData => {
+        if (!dbPostData) {
+          res.status(404).json({ message: 'No fweet found with this user' });
+          return;
+        }
+        res.json(dbPostData);
+      })
       .catch(err => {
         console.log(err);
         res.status(500).json(err);
