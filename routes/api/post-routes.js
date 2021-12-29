@@ -5,7 +5,12 @@ const { Post, User, Vote } = require('../../models');
 // get all users
 router.get('/', (req, res) => {
     Post.findAll({
-      attributes: ['id', 'fweet', 'created_at'],
+      attributes: [
+        'id', 
+        'fweet', 
+        'created_at',
+        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+    ],
       order: [['created_at', 'DESC']], 
       include: [
         {
@@ -26,7 +31,12 @@ router.get('/', (req, res) => {
       where: {
         id: req.params.id
       },
-      attributes: ['id', 'fweet', 'created_at'],
+      attributes: [
+        'id', 
+        'fweet', 
+        'created_at',
+        [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+    ],
       include: [
         {
           model: User,
@@ -61,7 +71,7 @@ router.get('/', (req, res) => {
   });
 
   // PUT /api/posts/Vote
-  router.put('/Vote', (req, res) =>{
+  router.put('/upvote', (req, res) =>{
       Vote.create({
           user_id: req.body.user_id,
           post_id: req.body.post_id
