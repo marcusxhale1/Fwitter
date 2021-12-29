@@ -34,11 +34,24 @@ router.get('/', (req, res) => {
     })
       .then(dbPostData => {
         if (!dbPostData) {
-          res.status(404).json({ message: 'No post found with this id' });
+          res.status(404).json({ message: 'No fweets found with this user' });
           return;
         }
         res.json(dbPostData);
       })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+
+  router.post('/', (req, res) => {
+    // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
+    Post.create({
+      fweet: req.body.fweet,
+      user_id: req.body.user_id
+    })
+      .then(dbPostData => res.json(dbPostData))
       .catch(err => {
         console.log(err);
         res.status(500).json(err);
