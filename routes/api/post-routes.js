@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, User } = require('../../models');
+const { Post, User, LikeButton } = require('../../models');
 
 // get all users
 router.get('/', (req, res) => {
@@ -58,6 +58,16 @@ router.get('/', (req, res) => {
         res.status(500).json(err);
       });
   });
+
+  // PUT /api/posts/likeButton
+  router.put('/likeButton', (req, res) =>{
+      LikeButton.create({
+          user_id: req.body.user_id,
+          LikeButton_id: req.body.LikeButton_id
+      })
+      .then(dbPostData => res.json(dbPostData))
+      .catch(err => res.json(err));
+  })
 
   //Updating someone's fweet
   router.put('/:id', (req, res) => {
