@@ -13,7 +13,7 @@ Post.init(
             primaryKey: true,
             autoIncrement: true
         },
-        tweet: {
+        fweet: {
             type: DataTypes.STRING,
             allowNull: false
         },

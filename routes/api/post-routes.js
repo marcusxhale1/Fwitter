@@ -4,7 +4,7 @@ const { Post, User } = require("../../models");
 // GET ALL posts
 router.get("/", (req, res) => {
   Post.findAll({
-    attributes: ["id", "tweet", "created_at"],
+    attributes: ["id", "fweet", "created_at"],
     order: [['created_at', 'DESC']],
     include: [
       {
@@ -26,7 +26,7 @@ router.get("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
-    attributes: ["id", "tweet", "created_at"],
+    attributes: ["id", "fweet", "created_at"],
     include: [
       {
         model: User,
@@ -50,7 +50,7 @@ router.get("/:id", (req, res) => {
 // CREATE a Post
 router.post("/", (req, res) => {
   Post.create({
-    tweet: req.body.tweet,
+    fweet: req.body.fweet,
     user_id: req.body.user_id,
   })
     .then((dbPostData) => res.json(dbPostData))
@@ -64,7 +64,7 @@ router.post("/", (req, res) => {
 router.put("/:id", (req, res) => {
   Post.update(
     {
-      tweet: req.body.tweet,
+      fweet: req.body.fweet,
     },
     {
       where: {
