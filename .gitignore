@@ -103,3 +103,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+#Adding a .env to .gitIgnore so we can all log into the database with the same code 
+.env

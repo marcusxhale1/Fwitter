@@ -1,42 +1,63 @@
-const User = require("./User");
-const Post = require("./Post");
-const Like = require('./Like');
+const User = require('./User');
+const Post = require('./Post');
+const Vote = require('./Vote');
+const Comment = require('./Comment')
 
-// create associations
+// User can create many posts 
 User.hasMany(Post, {
-  foreignKey: "user_id",
-});
+    foreignKey: 'user_id'
+  });
 
+// Post was created by X = User 
 Post.belongsTo(User, {
-  foreignKey: "user_id",
-});
+    foreignKey: 'user_id',
+  });
 
+// User belongs to many Fweets (post.js), and Fweets(post.js) belong to many Users
 User.belongsToMany(Post, {
-    through: Like,
+    through: Vote,
     as: 'liked_posts',
     foreignKey: 'user_id'
-});
-
-Post.belongsToMany(User, {
-    through: Like,
-    as: 'liked_posts',
+  });
+  
+  Post.belongsToMany(User, {
+    through: Vote,
+    as: 'liked-posts',
     foreignKey: 'post_id'
-})
+  });
 
-Like.belongsTo(User, {
+  Vote.belongsTo(User, {
     foreignKey: 'user_id'
-});
-
-Like.belongsTo(Post, {
+  });
+  
+  Vote.belongsTo(Post, {
     foreignKey: 'post_id'
-});
-
-User.hasMany(Like, {
+  });
+  
+  User.hasMany(Vote, {
     foreignKey: 'user_id'
-});
-
-Post.hasMany(Like, {
+  });
+  
+  Post.hasMany(Vote, {
     foreignKey: 'post_id'
-});
+  });
 
-module.exports = { User, Post, Like };
+  Comment.belongsTo(User, {
+    foreignKey: 'user_id'
+  });
+  
+  Comment.belongsTo(Post, {
+    foreignKey: 'post_id'
+  });
+  
+  User.hasMany(Comment, {
+    foreignKey: 'user_id'
+  });
+  
+  Post.hasMany(Comment, {
+    foreignKey: 'post_id'
+  });
+  
+  
+
+  module.exports = { User, Post, Vote, Comment };
