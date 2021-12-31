@@ -1,5 +1,5 @@
-const User = require('./User');
-const Post = require('./Post');
+const User = require("./User");
+const Post = require("./Post");
 const Vote = require('./Vote');
 const Comment = require('./Comment')
 
@@ -13,7 +13,6 @@ Post.belongsTo(User, {
     foreignKey: 'user_id',
   });
 
-// User belongs to many Fweets (post.js), and Fweets(post.js) belong to many Users
 User.belongsToMany(Post, {
     through: Vote,
     as: 'liked_posts',
@@ -22,7 +21,7 @@ User.belongsToMany(Post, {
   
   Post.belongsToMany(User, {
     through: Vote,
-    as: 'liked-posts',
+    as: 'liked_posts',
     foreignKey: 'post_id'
   });
 
@@ -57,7 +56,6 @@ User.belongsToMany(Post, {
   Post.hasMany(Comment, {
     foreignKey: 'post_id'
   });
-  
-  
 
-  module.exports = { User, Post, Vote, Comment };
+  
+module.exports = { User, Post, Vote, Comment };
