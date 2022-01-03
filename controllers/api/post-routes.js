@@ -79,13 +79,16 @@ router.post("/", (req, res) => {
 
 // CREATE a Like by UPDATING a post
 router.put('/like', (req, res) => {
-    // custom static method created in models/Post.js
-    Post.like(req.body, { Vote })
+      // make sure the session exists first
+  if (req.session) {
+    // pass session id along with all destructured properties on req.body
+    Post.like({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
       .then(updatedPostData => res.json(updatedPostData))
       .catch(err => {
         console.log(err);
         res.status(400).json(err);
       });
+    }
   });
 
 // UPDATE a Post
