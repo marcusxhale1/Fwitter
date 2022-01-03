@@ -5,7 +5,7 @@
   </h2>
   <form class="edit-post-form">
     <div>
-       <input name="fweet" type="text" value="{{post.fweet}}"/>
+       <textarea name="fweet" type="text" value="{{post.fweet}}"></textarea>
     </div>
     <div>
       {{post.vote_count}} {{format_plural "point" post.vote_count}} by you on {{format_date post.created_at}}

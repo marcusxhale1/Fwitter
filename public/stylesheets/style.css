@@ -118,8 +118,11 @@
   }
   
   .post {
+    padding-left: 1%;
     margin-bottom: 2%;
     line-height: 150%;
+    background-color:#fef5eb;
+    border: 1px solid lightgray;
   }
   
   .post .title span {
@@ -131,6 +134,7 @@
   .edit-link {
     display: block;
     margin: -1.5% 0 2% 0;
+    color: grey;
   }
   
   .upvote-btn {
@@ -175,4 +179,19 @@
     justify-content: center;
     padding: 1%;
     font-size: 110%;
+  }
+
+  .username-nav {
+    display: inline-block;
+    color: black;
+  }
+
+  #comment-tag {
+    color: grey;
+  }
+
+  .create-post {
+    padding: 2%;
+    border: 1px solid lightgray;
+    border-radius: 10px;
   }

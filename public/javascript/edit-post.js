@@ -1,6 +1,6 @@
 async function editFormHandler(event) {
     event.preventDefault();
-    const fweet = document.querySelector('input[name="fweet"]').value;
+    const fweet = document.querySelector('textarea[name="fweet"]').value;
     const id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
       ];

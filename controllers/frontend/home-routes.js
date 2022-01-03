@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const sequelize = require('../config/connection');
-const { Post, User, Comment } = require('../models');
+const sequelize = require('../../config/connection');
+const { Post, User, Comment } = require('../../models');
 
 
 // GET homepage with ALL fweets
@@ -34,6 +34,7 @@ router.get('/', (req, res) => {
       // pass a single post object into the homepage template
       res.render('homepage', {
         posts,
+        username: req.session.username,
         loggedIn: req.session.loggedIn
       });
     })
@@ -46,8 +47,7 @@ router.get('/', (req, res) => {
 // GET login page
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
+    return res.redirect('/dashboard');
   }
 
   res.render('login');
@@ -93,6 +93,7 @@ router.get('/post/:id', (req, res) => {
       // pass data to template
       res.render('single-post', {
         post,
+        username: req.session.username,
         loggedIn: req.session.loggedIn
       });
     })

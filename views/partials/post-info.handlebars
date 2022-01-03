@@ -3,8 +3,10 @@
         <h1>{{fweet}}</h1>
     </div>
     <div class="meta">
+         <a id="comment-tag" href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
+          |
         {{vote_count}} {{format_plural "point" vote_count}} by {{user.username}} on {{format_date created_at}}
-        |
-        <a href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
+       
+       
     </div>
 </article>
