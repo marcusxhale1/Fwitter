@@ -1,10 +1,10 @@
 <article class="post">
   <div class="title">
-    <a href="{{post.post_url}}" target="_blank">{{post.title}}</a>
-    <span>({{post.post_url}})</span>
+    <a href="{{post.post_url}}" target="_blank">{{post.fweet}}</a>
+    <span>{{post.post_url}}</span>
   </div>
   <div class="meta">
-    {{post.vote_count}} likes by {{post.user.username}} on
+    {{post.like_count}} likes by {{post.user.username}} on
     {{post.created_at}}
     |
     <a href="/post/{{post.id}}">{{post.comments.length}} Comments</a>
