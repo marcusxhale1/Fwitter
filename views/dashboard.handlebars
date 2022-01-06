@@ -1,0 +1,27 @@
+<section>
+  <h2>Create New Fweet</h2>
+
+  <form class="new-post-form">
+    <div>
+      <label for="fweet">Fweet</label>
+      <input type="text" id="fweet" name="fweet" />
+    </div>
+    <button type="submit" class="btn">Create</button>
+  </form>
+</section>
+
+{{#if posts.length}}
+<section>
+  <h2>Your Fweets</h2>
+  <ol>
+    {{#each posts as |post|}}
+    <li>
+      {{> post-info post}}
+      <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit fweet</a>
+    </li>
+    {{/each}}
+  </ol>
+</section>
+{{/if}}
+
+<script src="/javascript/add-post.js"></script>

@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const withAuth = require('../../utils/auth');
 const { Post, User, Vote, Comment } = require("../../models");
 const sequelize = require('../../config/connection');
 
@@ -68,7 +69,7 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   Post.create({
     fweet: req.body.fweet,
-    user_id: req.body.user_id,
+    user_id: req.session.user_id,
   })
     .then((dbPostData) => res.json(dbPostData))
     .catch((err) => {
@@ -117,7 +118,7 @@ router.put("/:id", (req, res) => {
 });
 
 // DELETE a Post
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
     Post.destroy({
       where: {
         id: req.params.id
